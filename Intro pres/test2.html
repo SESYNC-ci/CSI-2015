@@ -20,7 +20,7 @@ body {
       .remark-slide-content h2 { font-size: 2em; }
       .remark-slide-content h3 { font-size: 1.6em; }
       .inverse {
-        background: #1B1B1F;
+        background: #303031;
         color: #f3f3f3;
         text-shadow: 0 0 20px #333;
 		background-image: url(bkgrnd.png);
@@ -88,19 +88,43 @@ layout: false
 
 ## Three types of components
 
-- **Data Storage**: file shares and SQL database servers (50TB)
-- **Processing Resources**: Virtualization cluster (276 cores, 2,176 GM Memory)
-- **Gateway**: RStudio, ssh, files.sesync.org, custom virtual machines
+- **Data Storage**: file shares and SQL database servers
+- **Processing Resources**: Virtualization cluster
+- **Gateways**: RStudio, ssh, files.sesync.org, custom virtual machines
 
 <img src="CI.png" style="width: 700px;"/>
+
 .footer[NATIONAL SOCIO-ENVIRONMENTAL SYNTHESIS CENTER]
+???
+- Point out the three components and how they relate on the diagram
+
+
 ---
 class: inverse
 layout: false
 
 # Working in RStudio Server
+
+- RStudio.sesync.org
+
+- Access to all storage and processing resources
+
+- Integrates version control of code (and other text files)
+
+- Navigating data resources:
+	- Home directory ~
+	- Group data resources /nfs/...
+	
+
+
 .footer[NATIONAL SOCIO-ENVIRONMENTAL SYNTHESIS CENTER]
-- 
+???
+- Will be working in it because it's a one stop shop to all our resources
+	- connects to storage (home directory, group data, databases)
+	- run regular R backed by by big memory AND can submit larger jobs to the scheduled cluster
+	- point and click interface to 
+- Topics and tools we'll cover relevant to other environments (R and many data/programming concepts, script submission, SQL data mngmnt, version control)
+- Data uploaded through files.sesync available in /nfs/...
 
 
     </textarea>
