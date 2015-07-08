@@ -1,15 +1,6 @@
 Databases using SQL
 ===================
 
-Setup
------
-
-1. Install Firefox
-2. Install the SQLite Manager add on **Tools -> Add-ons -> Search -> SQLite
-Manager -> Install -> Restart**
-3. Download the [Portal Database](https://github.com/ethanwhite/swc-bootcamps/raw/master/SQL/portal_mammals.sqlite)
-4. Open SQLite Manage **Firefox Button -> Web Developer -> SQLite Manager**
-
 
 Relational databases
 --------------------
@@ -59,24 +50,34 @@ Database Design
      * Split into separate tables with one table per class of information
 	 * Needs an identifier in common between tables – shared column - to
        reconnect (foreign key).
+	   
+Why use (or when to consider) a relational design?
+----------------------------
+	   
+SQL (and SQL in R)
+------------------
+SQL (Structured Query Language) is a high-level language for interacting with relational databases. 
+Commands use intuitive English words but can be strung together and nested in powerful ways.
 
+To enable us to run these queries in R, we'll "wrap" SQL statements in commands and syntax that R understands.
+Keep in mind that the SQL statements themselves could be used as-is from other "gateways."
+	   
 
-Import
-------
+Connecting R to SQLite
+----------------------
+`install.packages("RSQLite")`
+`library(RSQLite)`
 
-1. Start a New Database **Database -> New Database**
-2. Start the import **Database -> Import**
-3. Select the file to import
-4. Give the table a name (or use the default)
-5. If the first row has column headings, check the appropriate box
-6. Make sure the delimiter and quotation options are correct
-7. Press **OK**
-8. When asked if you want to modify the table, click **OK**
-9. Set the data types for each field
+# Need to "open a connection" to the database so that R can communicate with it.
+# SQLite requires a "driver" and "dbname" 
 
-***EXERCISE: Import the plots table, time permitting, the species table***  
-  
-You can also use this same approach to append new data to an existing table.  
+`
+drv <- dbDriver("SQLite")
+db <- "/nfs/public-data/CSI2015/portal_mammals.sqlite"
+con <- dbConnect(drv, db)
+`
+
+#Other types of relational databases may have other arguments like user and pwd.
 
 
 Basic queries
