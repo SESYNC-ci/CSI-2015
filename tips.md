@@ -27,3 +27,4 @@ This is the same directory you can access via ```files.sesync.org```
 * Github repo with an archive of all the lessons and data: https://github.com/SESYNC-ci/CSI-2015/tree/master
 * Etherpad: sesync.us/csi2015ep
 
+* Database design tips: https://www.periscope.io/blog/better-sql-schema.html
