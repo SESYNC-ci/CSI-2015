@@ -31,4 +31,16 @@ shinyServer(function(input, output) {
          ylab=parameterUnits, xlab="")
   })
   
+  output$mymap <- renderLeaflet({
+    m <- leaflet() %>%
+      # addTiles() %>%  # Add default OpenStreetMap map tiles
+      # addProviderTiles("MapBox") %>%
+      # addProviderTiles("Esri.WorldImagery") %>%
+      addProviderTiles("Esri.WorldTopoMap") %>%
+      setView(lng=SiteInfo$dec_long_va, lat=SiteInfo$dec_lat_va, zoom = 12) %>%
+      addMarkers(lng=SiteInfo$dec_long_va, lat=SiteInfo$dec_lat_va, popup=SiteInfo$station_nm)
+    m  # Print the map
+    
+  })
+  
 })

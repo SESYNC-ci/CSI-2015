@@ -14,7 +14,8 @@ shinyUI(fluidPage(
     
         # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("ParameterPlot")
+      plotOutput("ParameterPlot"),
+      leafletOutput("mymap")
     )
   )
 ))
