@@ -1,19 +1,15 @@
 Intro to functions
 ======================================
   
-# Goals for understanding:
-# 1. how to use apply() family 
-# 2. define default arguments in a function
-# 3. how to supply arguments to functions
-# 4. define a function with function(){}
+Say we want to find the date of the maximum number of observations of a species
 
-# for a (each) species, find the date of the maximum number of observations
+One way to do that:
 
+* aggregate number of observations by survey date
+* subset surveys by the given species
+* find row with max by sorting
+* return date, or return date and number of observations 
 
-# aggregate number of observations by survey date
-# subset surveys by the given species
-# find row with max - sort by x
-# return date, or return date and number of observations (argument to function?)
 ``` r
 speciesid <- "SA"
 surveys_sub <- surveys[surveys$species==speciesid,]
@@ -22,7 +18,7 @@ surveys_agg <- aggregate(surveys_sub$record_id, by=list(surveys_sub$date), funct
 surveys_agg[max(surveys_agg$x),] # why is this wrong? (returns 7th row)
 surveys_agg[which(surveys_agg$x==max(surveys_agg$x)),]
 ``` 
-# OR
+
 ``` r
 surveys_agg[order(surveys_agg$x),] # orders lowest to highest
 surveys_agg[rev(order(surveys_agg$x)),] # orders highest to lowest
@@ -34,7 +30,7 @@ surveys_sub <- surveys_agg[surveys_agg$species==speciesid,]
 surveys_sub[rev(order(surveys_sub$obs)),]
 ``` 
 
-# We don't want to have to re-evaluate these, every time. So we write a function. basic format for function writing is function(arguments){what function does}
+We don't want to have to re-evaluate these, every time. So we write a function. basic format for function writing is function(arguments){what function does}
 
 ``` r
 max_date_finder <- function(x = speciesid){
@@ -69,3 +65,7 @@ specieslist <- unique(species$species_id)
 max_obs_dates <- lapply(specieslist, function(x) max_date_finder(x, dateOrObs = "Both"))
 
 ``` 
+
+Additional information
+----------------------
+
