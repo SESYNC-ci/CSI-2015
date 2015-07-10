@@ -17,16 +17,19 @@ shinyServer(function(input, output) {
   #  1) It is "reactive" and therefore should re-execute automatically
   #     when inputs change
   #  2) Its output type is a plot
-  siteNumber <- input$inputId
-  dv_avilable <- whatNWISdata(siteNumber, service="dv")
+  siteNumber <- "01491000"
+  dv_available <- whatNWISdata(siteNumber, service="dv")
   
   output$ParameterPlot <- renderPlot({
+    
     siteNumber <- input$inputId
     parameterName <- input$inputP
-    parameterCd <- dv_avilable[dv_avilable$srsname==parameterName,"parm_cd"][1]
-    begin_date <- dv_avilable[dv_avilable$srsname==parameterName,"begin_date"][1]
-    end_date <- dv_avilable[dv_avilable$srsname==parameterName,"end_date"][1]
-    parameterUnits <- dv_avilable[dv_avilable$srsname==parameterName,"parameter_units"][1]
+    
+    dv_available <- whatNWISdata(siteNumber, service="dv")
+    parameterCd <- dv_available[dv_available$srsname==parameterName,"parm_cd"][1]
+    begin_date <- dv_available[dv_available$srsname==parameterName,"begin_date"][1]
+    end_date <- dv_available[dv_available$srsname==parameterName,"end_date"][1]
+    parameterUnits <- dv_available[dv_available$srsname==parameterName,"parameter_units"][1]
     siteInfo <- readNWISsite(siteNumber)
     rawDailyData <- readNWISdv(siteNumber,parameterCd, begin_date,end_date)
     
