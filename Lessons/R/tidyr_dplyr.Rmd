@@ -9,7 +9,7 @@ output:
 
 # Data manipulation with tidyr and dplyr
 
-During this morning's session, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we'll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
+In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we'll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
 
 To get the most out of packages like dplyr and ggplot2 (which we'll discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for 'cleaning' data sets.
 
