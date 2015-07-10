@@ -9,7 +9,7 @@ shinyUI(fluidPage(
       a(href="http://maps.waterdata.usgs.gov/mapper/index.html", "Find site codes with NWIS Mapper"),
       
       textInput("inputId", label = "Input Site Code", value = "01491000"),
-      radioButtons("inputP", label = "Chose parameter", choices = unique(dv_avilable$srsname))
+      radioButtons("inputP", label = "Chose parameter", choices = unique(dv_available$srsname))
     ),
     
         # Show a plot of the generated distribution
