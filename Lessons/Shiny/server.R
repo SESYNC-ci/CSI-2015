@@ -1,6 +1,9 @@
 # R Shiny example
 
 # install.packages("shiny")
+# install.packages("dataRetrieval",repos="http://owi.usgs.gov/R")
+# devtools::install_github("rstudio/leaflet")
+library(leaflet)
 library(shiny)
 library(dataRetrieval)
 
@@ -14,6 +17,7 @@ shinyServer(function(input, output) {
   #  1) It is "reactive" and therefore should re-execute automatically
   #     when inputs change
   #  2) Its output type is a plot
+  siteNumber <- input$inputId
   dv_avilable <- whatNWISdata(siteNumber, service="dv")
   
   output$ParameterPlot <- renderPlot({
