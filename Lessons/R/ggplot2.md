@@ -1,7 +1,7 @@
 Graphics with ggplot2
 =====================
 
-This lesson is a brief overview of the **ggplot2** package, which is a R implementation of the "grammar of graphics". In base R, there are different functions for different types of graphics (`plot`, `boxplot`, `hist`, etc.) and each may have their own specific parameters in addition to general plot options. In contrast, ggplot2 constructs plots one 'layer' at a time; for example, the output of a linear regression could be plotted by defining the axes, then adding individual points, tracing the line of best fit, and finally specifying overall layout parameters such as font sizes and background color.
+This lesson is a brief overview of the **ggplot2** package, which is a R implementation of the "grammar of graphics". In base R, there are different functions for different types of graphics (`plot`, `boxplot`, `hist`, etc.) and each may have their own specific parameters in addition to general plot options. In contrast, ggplot2 constructs plots one *layer* at a time; for example, the output of a linear regression could be plotted by defining the axes, then adding individual points, tracing the line of best fit, and finally specifying overall layout parameters such as font sizes and background color.
 
 This layered approach allows for highly customizable graphics. Even when a plot requires several lines of code, that code is broken down in simple components that are easy to interpret.
 
@@ -10,7 +10,7 @@ Let's start by loading a few packages along with sample data. We filter our *sur
 ``` r
 library(dplyr)
 library(ggplot2)
-surveys <- read.csv('../../Data/surveys.csv', na.strings = '')
+surveys <- read.csv("/nfs/public-data/CSI2015/surveys.csv", na.strings = "")
 surveys <- filter(surveys, !is.na(species), !is.na(sex), !is.na(wgt))
 ```
 
@@ -32,19 +32,19 @@ Multiple geom layers can be combined in a single plot:
 ``` r
 ggplot(data = surveys, aes(x = species, y = wgt)) + 
   geom_boxplot() +
-  geom_point(stat = 'summary', fun.y = 'mean', color = 'red')
+  geom_point(stat = "summary", fun.y = "mean", color = "red")
 ```
 
 ![](ggplot2_files/figure-markdown_github/plot_box-1.png)
 
 This `geom_point` layer definition illustrates a couple new features:
 
--   With `stat = 'summary'`, we can plot a summary statistic (defined by `fun.y`) instead of the raw data.
+-   With `stat = "summary"`, we can plot a summary statistic (defined by `fun.y`) instead of the raw data.
 -   Setting `color = red` applies one color to the whole layer. If we want instead to associate color (or some other attribute, like point shape) to a variable, it needs to be specified within an `aes` function.
 
 ### Quick plotting with qplot
 
-The `qplot` function provides a shortcut to `ggplot` that looks more like the base R `plot` function, e.g. `qplot(x = species, y = wgt, data = surveys, geom = 'boxplot')`. This can be useful to quickly produce simple graphs, especially those with a single geom.
+The `qplot` function provides a shortcut to `ggplot` that looks more like the base R `plot` function, e.g. `qplot(x = species, y = wgt, data = surveys, geom = "boxplot")`. This can be useful to quickly produce simple graphs, especially those with a single geom.
 
 ### Exercise
 
@@ -53,13 +53,13 @@ Using `dplyr` and `ggplot` show how the mean weight of individuals of the specie
 Adding and customizing scales
 -----------------------------
 
-The code below shows one graph answering the question in the exercise. I added a `geom_smooth` layer that displays a regression line with confidence intervals (95% CI by default). The `method = 'lm'` parameter specifies that a linear model is used for smoothing.
+The code below shows one graph answering the question in the exercise. I added a `geom_smooth` layer that displays a regression line with confidence intervals (95% CI by default). The `method = "lm"` parameter specifies that a linear model is used for smoothing.
 
 ``` r
-surveys_dm <- filter(surveys, species == 'DM')
+surveys_dm <- filter(surveys, species == "DM")
 ggplot(data = surveys_dm, aes(x = year, y = wgt)) + 
-  geom_point(aes(shape = sex), size = 3, stat = 'summary', fun.y = 'mean') +
-  geom_smooth(method = 'lm')
+  geom_point(aes(shape = sex), size = 3, stat = "summary", fun.y = "mean") +
+  geom_smooth(method = "lm")
 ```
 
 ![](ggplot2_files/figure-markdown_github/plot_lm-1.png)
@@ -68,8 +68,8 @@ To get separate regression lines for females and males, we could add a *group* a
 
 ``` r
 ggplot(data = surveys_dm, aes(x = year, y = wgt)) + 
-  geom_point(aes(shape = sex), size = 3, stat = 'summary', fun.y = 'mean') +
-  geom_smooth(aes(group = sex), method = 'lm')
+  geom_point(aes(shape = sex), size = 3, stat = "summary", fun.y = "mean") +
+  geom_smooth(aes(group = sex), method = "lm")
 ```
 
 ![](ggplot2_files/figure-markdown_github/plot_lm_group-1.png)
@@ -78,8 +78,8 @@ Even better would be to distinguish the two lines by color:
 
 ``` r
 year_wgt <- ggplot(data = surveys_dm, aes(x = year, y = wgt, color = sex)) + 
-  geom_point(aes(shape = sex), size = 3, stat = 'summary', fun.y = 'mean') +
-  geom_smooth(method = 'lm')
+  geom_point(aes(shape = sex), size = 3, stat = "summary", fun.y = "mean") +
+  geom_smooth(method = "lm")
 year_wgt
 ```
 
@@ -89,16 +89,16 @@ Notice that by adding the aesthetic mapping in the `ggplot` command, it is appli
 
 ``` r
 year_wgt <- year_wgt +
-  scale_color_manual(values = c('darkblue', 'orange'),
-                     labels = c('Female', 'Male')) +
+  scale_color_manual(values = c("darkblue", "orange"),
+                     labels = c("Female", "Male")) +
   scale_shape_manual(values = c(3, 2),
-                     labels = c('Female', 'Male'))
+                     labels = c("Female", "Male"))
 year_wgt  
 ```
 
 ![](ggplot2_files/figure-markdown_github/plot_lm_scales-1.png)
 
-The `labels` parameter affects the names displayed in the legend. What happens if the labels provided to the shape and color scales don't match? (Try it.) You can also change the order of legend labels with the `breaks` parameter of the `scale` function.
+The `labels` parameter affects the names displayed in the legend. What happens if the labels provided to the shape and color scales don"t match? (Try it.) You can also change the order of legend labels with the `breaks` parameter of the `scale` function.
 
 ### Exercise
 
@@ -107,11 +107,11 @@ Create an histogram of the weights of individuals of species *DM* and divide the
 Axes, labels and themes
 -----------------------
 
-Let's start from the histogram produced for the exercise above.
+Let"s start from the histogram produced for the exercise above.
 
 ``` r
 histo <- ggplot(data = surveys_dm, aes(x = wgt, fill = sex)) +
-  geom_histogram(binwidth = 3, color = 'white')
+  geom_histogram(binwidth = 3, color = "white")
 histo
 ```
 
@@ -121,8 +121,8 @@ We change the title and axis labels with the `labs` function, edit the breaks an
 
 ``` r
 histo <- histo + 
-  labs(title = expression(paste(italic('Dipodomys merriami'), ' weight distribution')),
-       x = 'Weight (g)', y = 'Count') +
+  labs(title = expression(paste(italic("Dipodomys merriami"), " weight distribution")),
+       x = "Weight (g)", y = "Count") +
   scale_x_continuous(limits = c(10, 70), breaks = c(20, 30, 40, 50, 60), 
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0))
@@ -139,7 +139,7 @@ Many plot-level options in `ggplot`, from background color to font sizes, are de
 histo <- histo +
   theme_classic() +
   theme(legend.position = c(0.2, 0.5),  # position relative to plot size (i.e. between 0 and 1)
-        plot.title = element_text(face = 'bold', vjust = 2),
+        plot.title = element_text(face = "bold", vjust = 2),
         axis.title.y = element_text(size = 13, vjust = 1), 
         axis.title.x = element_text(size = 13, vjust = 0))
 histo
@@ -154,13 +154,26 @@ To conclude this overview of ggplot2, here is an example of the use of *facets* 
 
 ``` r
 surveys_dm$month <- as.factor(surveys_dm$month)
-levels(surveys_dm$month) <- c('January', 'February', 'March', 'April', 'May',  
-  'June', 'July', 'August', 'September', 'October', 'November', 'December')
+levels(surveys_dm$month) <- c("January", "February", "March", "April", "May",  
+  "June", "July", "August", "September", "October", "November", "December")
 ggplot(data = surveys_dm, aes(x = wgt)) +
   geom_histogram() +
   facet_wrap( ~ month) +
-  labs(title = 'DM weight distribution by month', x = 'Count', y = 'Weight (g)')
+  labs(title = "DM weight distribution by month", x = "Count", y = "Weight (g)")
 ```
+
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 
 ![](ggplot2_files/figure-markdown_github/plot_facets-1.png)
 

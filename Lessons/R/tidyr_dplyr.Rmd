@@ -9,22 +9,22 @@ output:
 
 # Data manipulation with tidyr and dplyr
 
-In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we'll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
+In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we"ll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
 
-To get the most out of packages like dplyr and ggplot2 (which we'll discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for 'cleaning' data sets.
+To get the most out of packages like dplyr and ggplot2 (which we"ll discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for "cleaning" data sets.
 
 ## Tidy data concept
 
-R developer Hadley Wickham (author of the tidyr, dplyr and ggplot packages, among others) defines 'tidy' datasets as those where:
+R developer Hadley Wickham (author of the tidyr, dplyr and ggplot packages, among others) defines "tidy" datasets as those where:
 
 * each variable forms a column;
 * each observation forms a row; and
 * each type of observational unit forms a table. ([ref](http://www.jstatsoft.org/v59/i10/paper))
 
-These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let's consider a different examples where the counts of three species are recorded for each day in a week:
+These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let"s consider a different examples where the counts of three species are recorded for each day in a week:
 ```{r}
 counts_df <- data.frame(
-  day = c('Monday', 'Tuesday', 'Wednesday'),
+  day = c("Monday", "Tuesday", "Wednesday"),
   wolf = c(2, 1, 3),
   hare = c(20, 25, 30),
   fox = c(4, 4, 4)
@@ -40,10 +40,10 @@ To put it another way, if you can consider the grouping of observations based on
 
 ## Reshaping multiple columns into category/value pairs
 
-Let's load the **tidyr** package and use its `gather` function to reshape *counts_df* into a tidy format:
+Let"s load the **tidyr** package and use its `gather` function to reshape *counts_df* into a tidy format:
 ```{r}
 library(tidyr)
-counts_df <- gather(counts_df, key = 'species', value = 'count', 
+counts_df <- gather(counts_df, key = "species", value = "count", 
                     wolf:fox)
 counts_df
 ```
@@ -60,22 +60,22 @@ Why are `species` and `count` not quoted here? (They refer to existing column na
 
 The tidyr package also provides the `separate` function to split a character column into multiple pieces and `unite` to paste columns together. This can be useful to deal with timestamps, binomial names, etc. Here we will take the *species* table from our original dataset and create a new *name* column that combines the genus and species, separated by a space:
 ```{r}
-plots <- read.csv('../../Data/plots.csv', na.strings = '')
-species <- read.csv('../../Data/species.csv', na.strings = '')
-surveys <- read.csv('../../Data/surveys.csv', na.strings = '')
+plots <- read.csv("/nfs/public-data/CSI2015/plots.csv", na.strings = "")
+species <- read.csv("/nfs/public-data/CSI2015/species.csv", na.strings = "")
+surveys <- read.csv("/nfs/public-data/CSI2015/surveys.csv", na.strings = "")
 ```
 ```{r}
-species <- unite(species, name, c(genus, species), sep=' ')
+species <- unite(species, name, c(genus, species), sep=" ")
 head(species)
 ```
 
-Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let's use `separate` to reverse our previous operation:
+Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let"s use `separate` to reverse our previous operation:
 ```{r}
-species <- separate(species, name, c('genus', 'species'), sep=' ', convert = TRUE)
+species <- separate(species, name, c("genus", "species"), sep=" ", convert = TRUE)
 head(species)
 ```
 
-The `convert = TRUE` argument lets R convert the new columns to their 'natural' type. As an example, if we were splitting a date into year, month and day, R would automatically recognize the pieces as numeric rather than character data.
+The `convert = TRUE` argument lets R convert the new columns to their "natural" type. As an example, if we were splitting a date into year, month and day, R would automatically recognize the pieces as numeric rather than character data.
 
 ### Exercise
 
@@ -100,7 +100,7 @@ sorted2 <- surveys_pick100[order(surveys_pick100$species, -surveys_pick100$wgt),
 head(sorted1)
 ```
 
-To select rows based on certain conditions (like WHERE in SQL), use `filter`. Note that a logical 'and' is implied when conditions are separated by commas. 
+To select rows based on certain conditions (like WHERE in SQL), use `filter`. Note that a logical "and" is implied when conditions are separated by commas. 
 ```{r}
 surveys1990_winter <- filter(surveys, year == 1990, month %in% 1:3)
 ```
@@ -111,7 +111,7 @@ surveys1990_winter <- select(surveys1990_winter, -year)
 head(surveys1990_winter)
 ```
 
-Let's say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
+Let"s say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
 ```{r}
 surveys1990_winter <- group_by(surveys1990_winter, species)
 counts_1990w <- summarise(surveys1990_winter, count = n())
@@ -129,14 +129,14 @@ Keep this code since you will need it again for the next exercise.
 We could make our *counts_1990w* table more informative by adding the full name of the species. This amounts to joining the table with the *species* table, with matching done by species ID.
 ```{r}
 counts_1990w_join <- inner_join(counts_1990w, species, 
-                                by = c('species' = 'species_id'))
+                                by = c("species" = "species_id"))
 head(counts_1990w_join)
 ```
 
 If you look at the whole *counts_1990w_join* data frame, you may notice the last row of *counts_1990w* (where the species info. was *NA*) was excluded. An `inner_join` only keeps rows for which a match was found in the other table. To keep all rows from the first table, we could use `left_join` instead.
 ```{r eval = FALSE}
 counts_1990w_join <- left_join(counts_1990w, species, 
-                               by = c('species' = 'species_id'))
+                               by = c("species" = "species_id"))
 ```
 
 The last dplyr key function is `mutate`, which creates new columns by performing the same operation on existing values in each row. Here we use the absolute counts from *counts_1990w_join* to derive the proportion of each species.
@@ -147,7 +147,7 @@ head(counts_1990w)
 
 ## Chaining operations with pipes (%>%)
 
-We have seen that dplyr functions all take a data frame as their first argument and return a transformed data frame. This consistent syntax has the added benefit of making these functions compatible the 'pipe' operator (`%>%`). This operator actually comes from another R package, **magrittr**, which is loaded with dplyr by default. What `%>%` does is to take the expression on its left-hand side and feed it as the first argument to the function on its right-hand side. Here's a simple example:
+We have seen that dplyr functions all take a data frame as their first argument and return a transformed data frame. This consistent syntax has the added benefit of making these functions compatible the "pipe" operator (`%>%`). This operator actually comes from another R package, **magrittr**, which is loaded with dplyr by default. What `%>%` does is to take the expression on its left-hand side and feed it as the first argument to the function on its right-hand side. Here is a simple example:
 ```{r eval = FALSE}
 c(1,3,5,NA) %>% sum(na.rm = TRUE)   # same as sum(c(1,3,5,NA), na.rm = TRUE)
 ```
@@ -161,8 +161,8 @@ Adapt your code from the last exercise (average weight of *DM* individuals for e
 
 A common need of SESYNC researchers is to scale up an existing analysis to bigger datasets, which often involves replacing local files that fit in R memory with SQL databases. In this context, a major benefit of dplyr is that it provides an interface to query SQL tables using the exact same syntax as for data frames. Here we connect to our SQLite database with the `src_sqlite` function, then use `tbl` to assign a variable to the *surveys* table (without loading it in memory).  
 ```{r}
-mammals_db <- src_sqlite('../../Data/portal_mammals.sqlite')
-surveys_sql <- tbl(mammals_db, 'surveys')
+mammals_db <- src_sqlite("/nfs/public-data/CSI2015/portal_mammals.sqlite")
+surveys_sql <- tbl(mammals_db, "surveys")
 surveys_sql
 ```
 
