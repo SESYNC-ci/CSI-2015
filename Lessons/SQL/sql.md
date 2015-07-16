@@ -1,10 +1,8 @@
 Databases using SQL
 ===================
 
-
 Relational databases
 --------------------
-
 * Relational databases store data in tables with fields (columns) and records
   (rows)
 * Data in tables has types, just like in Python, and all values in a field have
@@ -12,20 +10,22 @@ Relational databases
 * Queries let us look up data or make calculations based on columns
 * The queries are distinct from the data, so if we change the data we can just
   rerun the query
-
+ 	   
+When to consider a relational design
+-------------------------------------
+### If you want to...
+* link data classified or measured at multiple levels (e.g., plots, sites, and species)
+* be able to ask multiple, ad-hoc questions about the data and aggregate and group it in different ways
 
 Database Management Systems
 ---------------------------
-
 There are a number of different database management systems for relational
-data. We're going to use SQLite today, but most everything we teach you
+data. We're going to use SQLite, but most everything 
 will apply to the other database systems as well (e.g., MySQL, PostgreSQL, MS
 Access, Filemaker Pro). The main differences are in the details of how to import and export data.
 
-
 The data
 --------
-
 This is data on a small mammal community in southern Arizona over the last 35
 years.  This is part of a larger project studying the effects of rodents and
 ants on the plant community.  The rodents are sampled on a series of 24 plots,
@@ -35,12 +35,10 @@ the plots.
 This is a real dataset that has been used in over 100 publications.  It's been
 simplified just a little bit for the workshop, but you can download the
 [full dataset](http://esapubs.org/archive/ecol/E090/118/) and work with it using
-exactly the same tools we'll learn about today.
-
+exactly the same tools here.
 
 Database Design
 ---------------
-
 1. Order doesn't matter
 2. Every row-column combination contains a single *atomic* value, i.e., not
    containing parts we might want to work with separately.
@@ -51,16 +49,13 @@ Database Design
 	 * Needs an identifier in common between tables – shared column - to
        reconnect (foreign key).
 	   
-Why use (or when to consider) a relational design?
-----------------------------
-	   
 SQL (and SQL in R)
 ------------------
 SQL (Structured Query Language) is a high-level language for interacting with relational databases. 
 Commands use intuitive English words but can be strung together and nested in powerful ways.
 
 To enable us to run these queries in R, we'll "wrap" SQL statements in commands and syntax that R understands.
-Keep in mind that the SQL statements themselves could be used as-is from other "gateways."
+Keep in mind that the SQL statements themselves could be used as-is from other "gateways" that run SQL.
 	   
 
 Connecting R to SQLite
@@ -68,16 +63,14 @@ Connecting R to SQLite
 `install.packages("RSQLite")`
 `library(RSQLite)`
 
-# Need to "open a connection" to the database so that R can communicate with it.
-# SQLite requires a "driver" and "dbname" 
+Need to "open a connection" to the database so that R can communicate with it.
+SQLite requires a "driver" and "dbname" 
 
-`
-drv <- dbDriver("SQLite")
-db <- "/nfs/public-data/CSI2015/portal_mammals.sqlite"
-con <- dbConnect(drv, db)
-`
+	drv <- dbDriver("SQLite")
+	db <- "/nfs/public-data/CSI2015/portal_mammals.sqlite"
+	con <- dbConnect(drv, db)
 
-#Other types of relational databases may have other arguments like user and pwd.
+Other types of relational databases may have other arguments like user and pwd.
 
 
 Basic queries
@@ -90,31 +83,64 @@ their species ID, sex and weight in grams.
 Let’s write an SQL query that selects only the year column from the surveys
 table.
 
-    SELECT year FROM surveys;
+We'll use the R command dbGetQuery to do this. It requires a connection object
+and a SQL statement. We created the connection object already, so now, the statement:
 
-We have capitalized the words SELECT and FROM because they are SQL keywords.
-SQL is case insensitive, but it helps for readability – good style.
+    SELECT year FROM surveys;
+	
+This is a SQL statement. We'll assign it to a character variable
+
+    q1 = "SELECT year FROM surveys;"
+	
+Now, call dbGetQuery.
+
+	dbGetQuery(con, q1)
+
+The results are returned to the window, but we can easily assign them to a dataframe
+
+	surv_yr = dbGetQuery(con, q1)
+	
+You can check that this is a dataframe.
+
+	class(surv_yr)
+	
+You don't have to assign the SQL statement to a variable. You can call it directly. As with many
+things in R, there's more than one way right way, and the most convenient way will depend on
+what you're doing.
+
+	surv_yr = dbGetQuery(con, "SELECT year FROM surveys;")	
+	
+A note on style: we have capitalized the words SELECT and FROM because they are SQL keywords.
+Unlike R, SQL is case insensitive, but it helps for readability – good style. Because the
+SQL statement is inside quotation marks, R treats it like any other character string and simply
+passes the string to the database via the dbGetQuery function. So, the SQL statement is still case
+insensitive.	
 
 If we want more information, we can just add a new column to the list of fields,
 right after SELECT:
-
-    SELECT year, month, day FROM surveys;
+    
+	q2 = "SELECT year, month, day FROM surveys;"
+	dbGetQuery(con, q2)
+	
+We can also nest dbGetQuery within other R commands, anywhere R can accept a dataframe:
+	
+	head(dbGetQuery(con, q2))
 
 Or we can select all of the columns in a table using the wildcard *
-
-    SELECT * FROM surveys;
+    
+	head(dbGetQuery(con, "SELECT * FROM surveys;"))
 
 ### Unique values
 
 If we want only the unique values so that we can quickly see what species have
 been sampled we use ``DISTINCT``
 
-    SELECT DISTINCT species FROM surveys;
+    head(dbGetQuery(con, "SELECT DISTINCT species FROM surveys;"))
 
 If we select more than one column, then the distinct pairs of values are
 returned
 
-    SELECT DISTINCT year, species FROM surveys;
+    head(dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys";))
 
 ### Calculated values
 
