@@ -41,10 +41,10 @@ Data frames possess the characteristics of both lists and matrices: if you subse
 
 Fix each of the following common data frame subsetting errors:
 
-    mtcars[mtcars$cyl = 4, ]
-    mtcars[-1:4, ]
-    mtcars[mtcars$cyl <= 5]
-    mtcars[mtcars$cyl == 4 | 6, ]
+    plots[plots$plot_id = 4, ]
+    plots[-1:4, ]
+    plots[plots$plot_id <= 5]
+    plots[plots$plot_id == 4 | 6, ]
 
 ### Subsetting operators
 
@@ -88,7 +88,7 @@ str(y)
     #>  $ b: NULL
 
 
-## Lookup tables
+If x is a matrix, what does x[] <- 0 do? How is it different to x <- 0?
 
 
 ## Re-ordering and sorting columns 
@@ -108,27 +108,6 @@ all, any
 intersect, union, setdiff, setequal
 which
 
-Challenge
-------------
-
-1. Change the species column in surveys table to species_id to match species table
-
-2. How many species of each taxa are there?
-
-3. Given a linear model, e.g., mod <- lm(mpg ~ wt, data = mtcars), extract the residual degrees of freedom. Extract the R squared from the model summary (summary(mod))
-
-4. If x is a matrix, what does x[] <- 0 do? How is it different to x <- 0?
-
-## Summary information
-
-| function | returns |
-|----------|---------|
-| dim | dimensions |
-| nrow | number of rows |
-| ncol | number of columns |
-| names | column names |
-| str | structure |
-| summary | summary info |
 
 ## Basic math
 

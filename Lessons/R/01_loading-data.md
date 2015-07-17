@@ -23,20 +23,37 @@ list.files(path = "Data/", pattern =".csv") # Find all files with .csv in the da
 
 ## Read in your data
 
+_put path to data folder on etherpad_
+list.files(path = '/nfs/public-data/CSI2015/')
+
+The data we are going to use is in a folder on the sesync storage space that you can access through RStudio. "public-data" is a folder just like many of you will have for your projects. 
+
+
 * use a function like read.csv() that reads in a file
-* the function returns your data. use the assignment operator "<-" to store that data in memory and work with it
+
 * use the function by passing it the appropriate arguments. there are necessary arguments and optional arguments for functions
 
 
 Now let's read in the file into a dataframe with the read_csv() function. The general syntax for the functions to read in data are to give the path to the file name, and then supply optinal additional arguments as necessary like specifying column types. If you don't specify what argument you are giving it, R will use the default ordering of the function. 
 
 
+
+## The assignment operator
+
+What happens if you just do
+
 ``` r
-plots <- read.csv(file="Data/plots.csv")
-# equivalent to: plots <- read_csv("Data/plots.csv")
-species <- read.csv(file="Data/species.csv")
-surveys <- read.csv(file="Data/surveys.csv")
+read.csv(file="/nfs/public-data/CSI2015/plots.csv")
+```
+
+the function returns your data. use the assignment operator "<-" to store that data in memory and work with it
+
+``` r
+plots <- read.csv(file="/nfs/public-data/CSI2015/plots.csv")
+species <- read.csv(file="/nfs/public-data/CSI2015/species.csv")
+surveys <- read.csv(file="/nfs/public-data/CSI2015/surveys.csv")
 ``` 
+
 
 ## Look at your data frames
 

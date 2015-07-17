@@ -1,10 +1,27 @@
 Data Structures
 ======================================
 
-After reading in the 3 csv files, let's explore what types of data are in each column. There are several ways to do this in RStudio. 
+After reading in the 3 csv files, let's explore what types of data are in each column and what kind of structure your data has. There are several ways to do this in RStudio. 
+
 
 * functions like class(), str()
 * the Environment window
+* _attributes_ of your data are shown as well
+    * names of columns
+    * dimensions, such as the number of rows and columns.
+  
+* summary(), dim(), names() and head() are others handy functions to get a quick idea of your data
+
+## Summary information
+
+| function | returns |
+|----------|---------|
+| dim | dimensions |
+| nrow | number of rows |
+| ncol | number of columns |
+| names | (column) names |
+| str | structure |
+| summary | summary info |
 
 ``` r
 str(plots)
@@ -28,11 +45,10 @@ You create a data frame using data.frame(), which takes named vectors as input:
 species$genus
 ```
 
-### Combining data frames
 
 You can combine data frames using cbind() and rbind()
 
-## Data structures
+## Other Data structures
 
 Data frames are 2-dimensional and can contain heterogenous data like numbers in one column and categories in another. Other types of data in R can be described according to these categories
 
@@ -51,7 +67,7 @@ Data frames are 2-dimensional and can contain heterogenous data like numbers in 
 ### Coercion
 All elements of an atomic vector must be the same type, so when you attempt to combine different types they will be coerced to the most flexible type. Types from least to most flexible are: logical, integer, double, and character. 
 
-## Vectors
+## Types of Vectors
 
 There are four common types of atomic vectors: logical, integer, double (often called numeric), and character. There are two rare types: complex and raw. 
 
@@ -76,6 +92,11 @@ class(plots[,"plot_type"])
 summary(plots[,2])
 ``` 
 
+#### Factors
+
+A factor is a vector that can contain only predefined values, and is used to store categorical data. Factors are built on top of integer vectors using two attributes: the class(), “factor”, which makes them behave differently from regular integer vectors, and the levels(), which defines the set of allowed values. 
+
+
 We can make the plots$plot_type column a factor with the as.factor() function
 
 ``` r
@@ -99,6 +120,26 @@ class(plots$control)
 summary(plots)
 ``` 
 
+
+
+### Lists
+
+Lists are different from atomic vectors because their elements can be of any type, including lists. You construct lists by using list() instead of c()
+
+c() will combine several lists into one. If given a combination of atomic vectors and lists, c() will coerce the vectors to lists before combining them. Compare the results of list() and c()
+
+```r
+x <- list(list(1, 2), c(3, 4))
+y <- c(list(1, 2), c(3, 4))
+str(x)
+str(y)
+```
+
+Lists are used to build up many of the more complicated data structures in R
+
+
+Advanced: dates
+------------------
 #### Dates 
 
 We are going to use some simple string manipulation to combine month, day, year into a date column. The function paste() combines things together using either a space or a given separator ("sep = "). paste0() will combine things without space (i.e. the default is: sep = "").
@@ -129,32 +170,10 @@ Note the POSIXct format. Now it is easy to find the date of the most recent surv
 max(surveys$date)
 ``` 
 
-#### Factors
-
-A factor is a vector that can contain only predefined values, and is used to store categorical data. Factors are built on top of integer vectors using two attributes: the class(), “factor”, which makes them behave differently from regular integer vectors, and the levels(), which defines the set of allowed values. 
-
-### Lists
-
-Lists are different from atomic vectors because their elements can be of any type, including lists. You construct lists by using list() instead of c()
-
-c() will combine several lists into one. If given a combination of atomic vectors and lists, c() will coerce the vectors to lists before combining them. Compare the results of list() and c()
-
-```r
-x <- list(list(1, 2), c(3, 4))
-y <- c(list(1, 2), c(3, 4))
-str(x)
-str(y)
-```
-
-Lists are used to build up many of the more complicated data structures in R
-
-
-
-
 
 Additional information
 ----------------------
 
-http://adv-r.had.co.nz/Data-structures.html
+* http://adv-r.had.co.nz/Data-structures.html
 
 * http://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html
