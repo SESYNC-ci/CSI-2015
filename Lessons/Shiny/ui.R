@@ -1,21 +1,12 @@
 shinyUI(fluidPage(
+  titlePanel("title panel"),
   
-  # Application title
-  titlePanel("USGS Daily Values"),
-  
-  # Sidebar with a slider input for the number of bins
   sidebarLayout(
-    sidebarPanel(
-      a(href="http://maps.waterdata.usgs.gov/mapper/index.html", "Find site codes with NWIS Mapper"),
-      
-      textInput("inputId", label = "Input Site Code", value = "01491000"),
-      radioButtons("inputP", label = "Chose parameter", choices = unique(dv_available$srsname))
+    sidebarPanel(selectInput("varchoice", 
+                             label = "Choose a year to display",
+                             choices = c("1990", "1996"),
+                             selected = "1990")
     ),
-    
-        # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("ParameterPlot"),
-      leafletOutput("mymap")
-    )
+    mainPanel(plotOutput("Plot"))
   )
 ))
