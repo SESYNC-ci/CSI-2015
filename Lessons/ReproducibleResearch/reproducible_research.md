@@ -1,7 +1,6 @@
-Reproducible Research
+Reproducible Research: who, what, where, why, when & how
 ===============
-author: Kelly Hondula
-font-family: 'Helvetica'
+author: SESYNC Computational Summer Institute July 2015
 
 
 Overview
@@ -9,21 +8,44 @@ Overview
 incremental: true
 
 - Motivation & context
+- Concepts and vocabulary
 - General principles
 - Survey landscape of tools
-- RShiny example
+- Dissemination example with RShiny
+
 
 Who is reproducible research for?
 ===============
+type: sub-section
+
+Who is reproducible research for?
+===============
+incremental: true
+title:false
 
 <div align="center">
-<img src="Confused-computer.png", width=300, height=500>
+<img src="images/Confused-computer.png", width=400, height=600>
+
+Don't let this be you!
+</div>
+
+***
+
+
+
+Who is reproducible research for?
+===============
+incremental: true
+title:false
+
+<div align="center">
+<img src="images/Confused-computer.png", width=400, height=600>
 
 </div>
 
 ***
 <div align="center">
-<img src="documents_folder.png">
+<img src="images/documents_folder.png", width=350, height=600>
 </div>
 
 Who is reproducible research for?
@@ -31,31 +53,37 @@ Who is reproducible research for?
 title:false
 
 <div align="center">
-<img src="TOPguidelines.jpg">
+<img src="images/guidelines.png">
+
+<img src="images/dmp.png"width = 600, height=200>
+
+<img src="images/sesyncpolicy.png">
+
 </div>
+
 
 
 Who is reproducible research for?
 ===============
+incremental: true
 
 * you, now and in the future
 * collaborators
 * reviewers & editors
-
-<div align="center">
-<img src="square_transverse.jpg" width=600 height=400>
-</div>
+* funding agencies
 
 What is reproducible research?
 ===============
+type: sub-section
+
+Access, understanding, sharing
+===============
 
 <div align="center">
-<img src="Peng_spectrum.jpg">
+<img src="images/Peng_spectrum.jpg">
 </div>
 
-<small><small>"The goal of reproducible research is to tie specific instructions to data analysis and experimental data so that scholarship can be recreated, better understood and verified."  - Max Kuhn, CRAN Task View: Reproducible Research </small></small>
-
-__Access__, __understanding__, __sharing__
+<small>"The goal of reproducible research is to tie specific instructions to data analysis and experimental data so that scholarship can be recreated, better understood and verified."  - Max Kuhn, CRAN Task View: Reproducible Research </small>
 
 
 What is reproducible research?
@@ -67,11 +95,11 @@ _i.e._
 __Raw data  +  instructions__
 
 <div align="left">
-<img src="legopile.jpg">
+<img src="images/legopile.jpg">
 </div>
 ***
 <div align="right">
-<img src="legobird.jpg">
+<img src="images/legobird.jpg">
 </div>
 
 
@@ -98,20 +126,21 @@ What NOT to share
 incremental: false
 
 - confidential data
-- published material
+- copyrighted material
 - pre-existing restrictive licenses
-- passwords, private keys
+- your passwords and private keys
 
 <div align="center">
-<img src="what-not-to-wear.jpg" width=600 height=350>
+<img src="images/what-not-to-wear.jpg" width=600 height=350>
 </div>
 
-
-Where?
+Where is reproducible research?
 ===============
+type: sub-section
 title:false
+
 <div align="center">
-<img src="re3data-org.jpg">
+<img src="images/re3data-org.jpg">
 </div>
 
 
@@ -124,97 +153,91 @@ How to choose the appropriate repository?
 - is it citable? (does it provide DOIs)
 - is your purpose archival, sharing or publication?
 
-Depositing code and data
-========================================================
-Payoffs
-- Free space for hosting (and paid options)
-- Assignment of persistent DOIs
-- Tracking citation metrics 
 
-Costs
-- Sometimes license restrictions (CC-BY & CC0)
-- Limited or no private storage space
+Why reproducible research?
+===============
+type: sub-section
 
-Benefits are straightforward
-=======================================================
-- **Verification & Reliability**: Easier to find and fix bugs. The results you produce today will be the same results you will produce tomorrow.
-- **Transparency**: Leads increased citation count, broader impact, improved institutional memory
-- **Efficiency**: Reuse allows for de-duplication of effort. Payoff in the (not so) long run
-- **Flexibility**: When you don’t 'point-and-click' you gain many new analytic options.
-
-But the limitations are substantial
-=======================================================
-Technical
-- Classified/sensitive/big data
-- Nondisclosure agreements & intellectual property 
-- Software licensing issues
-- Competition
-- Neither necessary nor sufficient for correctness (but essential for dispute resolution)
-
-***
-
-Cultural & personal 
-- Very few researchers follow even minimal reproducibility standards.
-- No-one expects or requires reproducibility 
-- No uniform standards of reproducibility, so no established user base
-- Inertia & embarassment
 
 Why?
 ===============
-- review "sticks" already talked about: journal policies, NSF/funding agency policies, Congressional mandates
-- "carrots" - examples of higher citation, visibility, etc.
 
+<img src ="images/carrot_GLKohuth.jpg">
+
+Increased visibility and citation
+===============
+
+
+<div align="center">
+<img src="images/Piwowar_Vision-citationdensity.png">
+</div>
+
+***
+
+Piwowar & Vision (2013) “Data reuse and the open data citation advantage.” PeerJ, e175
+
+https://peerj.com/articles/175/
+
+Figure 1: Citation density for papers with and without publicly available microarray data, by year of study publication.
+
+Better research
+==================
+
+<div align="center">
+<img src="images/reportingerrors.png">
+</div>
+
+***
+
+Wicherts et al (2011) “Willingness to Share Research Data Is Related to the Strength of the Evidence and the Quality of Reporting of Statistical Results.” PLoS ONE 6(11): e26828
+
+Figure 1. Distribution of reporting errors per paper for papers from which data were shared and from which no data were shared.
+
+More efficient, less redundant science
+=====================
+<div align="center">
+<img src="images/square_transverse.jpg" width=600 height=400>
+</div>
 
 When to think about reproducibility?
 ===============
-- things you can do now (file naming, etc.)
-- bookmarks and checkpoints in your progress. remember version control tools!
-- at publication/submission
-- think about it ahead of time!
-- knowing that you will be sharing results can make your science better
+type: sub-section
 
-
-How? 
+When to think about reproducibility?
 ===============
-Principles and tools
-- tools at different stages of publishing process. show good example of the PNAS paper on sprawl
-- software being used - even if not open source software, can share the flow diagram like the gis steps
-- what to share and what not to share
+- now
+- before you start a project
+- at publication
 
 
 File organization: a mighty weapon against chaos
 ==============
 
-These practices are easy to implement now and will payoff greatly as your projects become more complex.
+A good project layout helps ensure the
 
-Make a file's name and location VERY INFORMATIVE about what it is, why it exists, and how it relates to other things.
+- Integrity of data
+- Portability of the project
+- Easier to pick the project back up after a break
 
-- Machine readable: deliberate use of delimiters, avoid spaces and punctuation, accented characters
-- Human readable: contains info on content in some way
-- Default ordering; put something numeric first, use ISO 8601 standard for dates YYYY-MM-DD, left pad numbers with zeros
+Help find and use your files again
+==============
 
-- File formats: Use non-proprietary file formats such as .csv and .txt rather than Word, Excel, PDFs, images
+- **Machine readable**: deliberate use of delimiters, avoid spaces and punctuation, accented characters
+- **Human readable**: contains info on content in some way
+- **Default ordering**; put something numeric first, use ISO 8601 standard for dates YYYY-MM-DD, left pad numbers with zeros
+- **File formats**: Use non-proprietary file formats such as .csv and .txt rather than Word, Excel, PDFs, images
+
+_picture with example file names?_
 
 Tools for reproducible research
 ==============
-- github
-- figshare
-- dryad
-- RShiny
-- jupyter notebook
-- RStudio: File > Compile Notebook
 
 
-Interactive notebook in the browser, IPython-style
-========================================================
-```
-library(rCharts)
-open_notebook()
-```
-
+<img src="images/logos.png">
 
 Shiny example
 ==============
+
 [RStudio Shiny cheatsheet](http://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
 
 More references & resources
@@ -227,7 +250,14 @@ incremental:false
 * [Using R Markdown with RStudio](http://www.rstudio.com/ide/docs/authoring/using_markdown)
 * [knitr website](http://yihui.name/knitr/)
 * [Markdown example with knitr and rCharts](http://rpubs.com/rchavelas90/9331) by Ricardo Chavelas
-* [Registry of Research Data Repositories](http://www.re3data.org/)
 
+More references & resources
+===============
+title:false
+* [Registry of Research Data Repositories](http://www.re3data.org/)
+* http://nicercode.github.io/blog/2013-04-05-projects/
+* http://www.carlboettiger.info/2012/05/06/research-workflow.html
+* http://software-carpentry.org/v4/data/mgmt.html
+* http://reproducible-science-curriculum.github.io/2015-06-01-reproducible-science-idigbio/checklist.html
 
 
