@@ -47,5 +47,16 @@ bison_out <- bison(species = "Ambrosia artemisiifolia", count = 1000)
 bisonmap(bison_out)
 ```
 
+We save the *bison_out* object in a .RData file to be able to retrieve it for a future session.
 
+```{r}
+save(bison_out, file = "bison_out.RData")
+```
 
+### Additional references
+
+* A general directory of web APIs <http://www.programmableweb.com/apis/directory>
+
+* rOpenSci packages to connect to popular science data repositories <https://ropensci.org/packages/>
+
+* CRAN Task View: Web Technologies and Services <https://cran.r-project.org/web/views/WebTechnologies.html>

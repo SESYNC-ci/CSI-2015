@@ -42,3 +42,17 @@ bisonmap(bison_out)
 ```
 
 ![](web_data_files/figure-markdown_github/bisonmap-1.png)
+
+We save the *bison\_out* object in a .RData file to be able to retrieve it for a future session.
+
+``` r
+save(bison_out, file = "bison_out.RData")
+```
+
+### Additional references
+
+-   A general directory of web APIs <http://www.programmableweb.com/apis/directory>
+
+-   rOpenSci packages to connect to popular science data repositories <https://ropensci.org/packages/>
+
+-   CRAN Task View: Web Technologies and Services <https://cran.r-project.org/web/views/WebTechnologies.html>
