@@ -20,6 +20,8 @@ The data we read in are stored in a __data frame__. Data frames have the same ty
 
 A data frame is the most common way of storing data in R, and if used systematically makes data analysis easier. Under the hood, a data frame is a list of equal-length vectors. This makes it a 2-dimensional structure, so it shares properties of both the matrix and the list. This means that a data frame has names(), colnames(), and rownames(), although names() and colnames() are the same thing. The length() of a data frame is the length of the underlying list and so is the same as ncol(); nrow() gives the number of rows. 
 
+A data.frame is one of the most commonly used objects in R. Just think of a data.frame like a table, or a spreadsheet, with rows and columns and numbers, text, etc. in the cells. A very special thing about the data.frame in R is that it can handle multiple types of data - that is, each column can have a different type. Like in the below table the first column is of numeric type, the second a factor, and the third character.
+
 You create a data frame using data.frame(), which takes named vectors as input:
 
 ```r

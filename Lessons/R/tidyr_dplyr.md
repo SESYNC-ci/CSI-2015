@@ -85,7 +85,9 @@ The tidyr package also provides the `separate` function to split a character col
 plots <- read.csv('../../Data/plots.csv', na.strings = '')
 species <- read.csv('../../Data/species.csv', na.strings = '')
 surveys <- read.csv('../../Data/surveys.csv', na.strings = '')
+```
 
+``` r
 species <- unite(species, name, c(genus, species), sep=' ')
 head(species)
 ```
@@ -133,12 +135,12 @@ head(surveys_pick100)
 ```
 
     ##       record_id month day year plot species sex wgt
-    ## 22826     22826     9  24 1995    6      OT   M  24
-    ## 11565     11565     6   4 1986   12      DM   F  44
-    ## 13394     13394     9  26 1987   13      DO   M  56
-    ## 18214     18214     1  11 1991   19      RM   F  14
-    ## 1124       1124     8   4 1978   21      PF   M   8
-    ## 4180       4180     4   5 1981   17      OT   F  37
+    ## 11834     11834     9   6 1986   24      DM   M  42
+    ## 14024     14024     2  21 1988    6      PM   M  20
+    ## 21347     21347     2   2 1994   16      RM   F  10
+    ## 5253       5253     1  24 1982   24      DO   F  58
+    ## 1604       1604     1  29 1979   14      DM   F  48
+    ## 10961     10961    11  16 1985   14      DM   M  52
 
 `arrange` sorts rows over one or multiple columns. As a comparison, I added the base R code doing the same operation.
 
@@ -149,12 +151,12 @@ head(sorted1)
 ```
 
     ##   record_id month day year plot species  sex wgt
-    ## 1     29887    10   9 1999   17      AH <NA>  NA
-    ## 2     31859     3  24 2001    2      DM    F  60
-    ## 3     23490     2  25 1996    5      DM    F  55
-    ## 4     31922     3  25 2001   14      DM    F  54
-    ## 5      6568     9  18 1982    1      DM    M  52
-    ## 6     16377     7  30 1989    2      DM    F  51
+    ## 1     13829    11  22 1987   13      AB <NA>  NA
+    ## 2     16987     1  29 1990    6      AB <NA>  NA
+    ## 3     23677     4  14 1996   20      AH <NA>  NA
+    ## 4     21983    12   5 1994    9      AH <NA>  NA
+    ## 5     21209    11  13 1993    7      CU <NA>  NA
+    ## 6     18886     7  13 1991    9      DM    M  54
 
 To select rows based on certain conditions (like WHERE in SQL), use `filter`. Note that a logical 'and' is implied when conditions are separated by commas.
 
@@ -203,15 +205,15 @@ Keep this code since you will need it again for the next exercise.
 
 ------------------------------------------------------------------------
 
-We could make our *counts\_1990w* table more informative by adding the full name of the species. This can be done most simply by joining the table with the *species* table by matching species IDs.
+We could make our *counts\_1990w* table more informative by adding the full name of the species. This amounts to joining the table with the *species* table, with matching done by species ID.
 
 ``` r
 counts_1990w_join <- inner_join(counts_1990w, species, 
                                 by = c('species' = 'species_id'))
 ```
 
-    ## Warning in inner_join_impl(x, y, by$x, by$y): joining factors with
-    ## different levels, coercing to character vector
+    ## Warning: joining factors with different levels, coercing to character
+    ## vector
 
 ``` r
 head(counts_1990w_join)

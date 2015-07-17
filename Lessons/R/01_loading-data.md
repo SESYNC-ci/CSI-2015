@@ -3,6 +3,9 @@ Loading data into R
 
 Our first mission is to ingest your data into R in a way that makes it easy to work with. Data could live on a disk, in a database, or on the web. Our focus right now is when data lives on a disk. We will move later into when data lives on a database or on the web.
 
+    # The first functions to learn
+    ?
+    str
 
 ## Your working directory
 

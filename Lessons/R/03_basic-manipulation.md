@@ -153,4 +153,4 @@ Additional information
 
 http://adv-r.had.co.nz/Subsetting.html#simplify-preserve
 http://adv-r.had.co.nz/Vocabulary.html
-
+http://rforcats.net/
