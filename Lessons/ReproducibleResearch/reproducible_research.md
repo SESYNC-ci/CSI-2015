@@ -82,6 +82,7 @@ Access, understanding, sharing
 <div align="center">
 <img src="images/Peng_spectrum.jpg">
 </div>
+**give figure citation**
 
 <small>"The goal of reproducible research is to tie specific instructions to data analysis and experimental data so that scholarship can be recreated, better understood and verified."  - Max Kuhn, CRAN Task View: Reproducible Research </small>
 
@@ -144,7 +145,7 @@ title:false
 </div>
 
 
-How to choose the appropriate repository?
+How to choose an appropriate repository?
 ===============
 - is there a domain specific repository?
 - what are the backup & replication policies?
@@ -219,15 +220,25 @@ A good project layout helps ensure the
 - Portability of the project
 - Easier to pick the project back up after a break
 
+File organization: a mighty weapon against chaos
+==============
+
+<div align="center">
+<img src="images/datfile.jpg" height=450, width=600>
+</div>
+
 Help find and use your files again
 ==============
 
-- **Machine readable**: deliberate use of delimiters, avoid spaces and punctuation, accented characters
-- **Human readable**: contains info on content in some way
-- **Default ordering**; put something numeric first, use ISO 8601 standard for dates YYYY-MM-DD, left pad numbers with zeros
-- **File formats**: Use non-proprietary file formats such as .csv and .txt rather than Word, Excel, PDFs, images
+- **Machine readable**  
+   deliberate use of delimiters, avoid spaces and punctuation, accented characters
+- **Human readable**  
+  contains info on content in some way
+- **Default ordering**  
+  put something numeric first, use ISO 8601 standard for dates YYYY-MM-DD, left pad numbers with zeros
+- **File formats**  
+  Use non-proprietary file formats such as .csv and .txt rather than Word, Excel, PDFs, images
 
-_picture with example file names?_
 
 Tools for reproducible research
 ==============
