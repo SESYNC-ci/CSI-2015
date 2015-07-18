@@ -1,5 +1,5 @@
-Databases using SQL
-===================
+Databases using SQL and R
+==========================
 
 Relational databases
 --------------------
@@ -14,7 +14,7 @@ Relational databases
 When to consider a relational design
 -------------------------------------
 ### If you want to...
-* link data classified or measured at multiple levels (e.g., plots, sites, and species)
+* link data classified or measured at multiple levels (e.g., plots, surveys, and species)
 * be able to ask multiple, ad-hoc questions about the data and aggregate and group it in different ways
 
 Database Management Systems
@@ -60,8 +60,10 @@ Keep in mind that the SQL statements themselves could be used as-is from other "
 
 Connecting R to SQLite
 ----------------------
-`install.packages("RSQLite")`
-`library(RSQLite)`
+RSQLite is a package that allows us to do that.
+
+	install.packages("RSQLite")
+	library(RSQLite)
 
 Need to "open a connection" to the database so that R can communicate with it.
 SQLite requires a "driver" and "dbname" 
@@ -100,9 +102,9 @@ The results are returned to the window, but we can easily assign them to a dataf
 
 	surv_yr = dbGetQuery(con, q1)
 	
-You can check that this is a dataframe.
+Check what's in surv_yr with the head() function
 
-	class(surv_yr)
+	head(surv_yr)
 	
 You don't have to assign the SQL statement to a variable. You can call it directly. As with many
 things in R, there's more than one way right way, and the most convenient way will depend on
@@ -119,12 +121,11 @@ insensitive.
 If we want more information, we can just add a new column to the list of fields,
 right after SELECT:
     
-	q2 = "SELECT year, month, day FROM surveys;"
-	dbGetQuery(con, q2)
+	dbGetQuery(con, "SELECT year, month, day FROM surveys;")
 	
 We can also nest dbGetQuery within other R commands, anywhere R can accept a dataframe:
 	
-	head(dbGetQuery(con, q2))
+	head(dbGetQuery(con, "SELECT year, month, day FROM surveys;"))
 
 Or we can select all of the columns in a table using the wildcard *
     
@@ -140,24 +141,33 @@ been sampled we use ``DISTINCT``
 If we select more than one column, then the distinct pairs of values are
 returned
 
-    head(dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys";))
+    dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys";)
 
+## Limit
+
+We've been using head() from R to just look at the first few rows, but
+SQL also has a function that will do this, called Limit
+
+	dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys LIMIT 10";)
+	
+	
 ### Calculated values
 
 We can also do calculations with the values in a query.
 For example, if we wanted to look at the mass of each individual
 on different dates, but we needed it in kg instead of g we would use
 
-    SELECT year, month, day, wgt/1000.0 from surveys
+    dbGetQuery(con, "SELECT year, month, day, wgt/1000.0 FROM surveys LIMIT 10;")
 
 When we run the query, the expression ``wgt / 1000.0`` is evaluated for each row
 and appended to that row, in a new column.  Expressions can use any fields, any
 arithmetic operators (+ - * /) and a variety of built-in functions (). For
 example, we could round the values to make them easier to read.
 
-    SELECT plot, species, sex, wgt, ROUND(wgt / 1000.0, 2) FROM surveys;
+    dbGetQuery(con," SELECT plot, species, sex, wgt, ROUND(wgt / 1000.0, 2) FROM surveys;")
 
-The underlying data in the wgt column of the table does not change.  The query, which exists separately from the data, simply displays the calculation we requested in the query result window pane.
+The underlying data in the wgt column of the table does not change. The query, which exists separately from the data,
+simply displays the calculation we requested in the query result window pane.
 
 ***EXERCISE: Write a query that returns
              the year, month, day, species ID, and weight in mg***
@@ -170,18 +180,18 @@ criteria.  For example, let’s say we only want data for the species Dipodomys
 merriami, which has a species code of DM.  We need to add a WHERE clause to our
 query:
 
-    SELECT * FROM surveys WHERE species="DM";
+    dbGetQuery(con, "SELECT * FROM surveys WHERE species='DM';")
 
 We can do the same thing with numbers.
 Here, we only want the data since 2000:
 
-    SELECT * FROM surveys WHERE year >= 2000;
-
+    "SELECT * FROM surveys WHERE year >= 2000;"
+	
 We can use more sophisticated conditions by combining tests with AND and OR.
 For example, suppose we want the data on Dipodomys merriami starting in the year
 2000:
 
-    SELECT * FROM surveys WHERE (year >= 2000) AND (species = "DM");
+    dbGetQuery(con, "SELECT * FROM surveys WHERE (year >= 2000) AND (species = 'DM');")
 
 Note that the parentheses aren’t needed, but again, they help with readability.
 They also ensure that the computer combines AND and OR in the way that we
@@ -196,16 +206,16 @@ which have species codes DM, DO, and DS we could combine the tests using OR:
    The day, month, year, species ID, and weight (in kg) for
    individuals caught on Plot 1 that weigh more than 75 g***
 
-
+<!--- Applicable in Firefox SQLite interface 
 Saving & Exporting queries
 --------------------------
-
 * Exporting:  **Actions** button and choosing **Save Result to File**.  
 [Results set saved as static, external text file.]
 * Save: **View** drop down and **Create View**.  
 [Result set of query saved dynamically as part of the database.  If underlying table that is queried changes, the view will change too.]
+-->
 
-
+<!---
 Building more complex queries
 -----------------------------
 
@@ -225,7 +235,7 @@ their effects as we went along.  For complex queries, this is a good strategy,
 to make sure you are getting what you want.  Sometimes it might help to take a
 subset of the data that you can easily see in a temporary database to practice
 your queries on before working on a larger or more complicated database.
-
+-->
 
 Sorting
 -------
@@ -233,7 +243,7 @@ Sorting
 We can also sort the results of our queries by using ORDER BY.
 For simplicity, let’s go back to the species table and alphabetize it by taxa.
 
-    SELECT * FROM species ORDER BY taxa ASC;
+    dbGetQuery(con, "SELECT * FROM species ORDER BY taxa ASC;")
 
 The keyword ASC tells us to order it in Ascending order.
 We could alternately use DESC to get descending order.
@@ -251,7 +261,7 @@ To truly be alphabetical, we might want to order by genus then species.
              year, species, and weight in kg from the surveys table, sorted with
              the largest weights at the top***
 
-
+<!--
 Order of execution
 ------------------
 
@@ -269,7 +279,7 @@ The computer is basically doing this:
 1. Filtering rows according to WHERE
 2. Sorting results according to ORDER BY
 3. Displaying requested columns or expressions.
-
+-->
 
 Order of clauses
 ----------------
@@ -280,11 +290,8 @@ and we often write each of them on their own line for readability.
 ***Exercise: Let's try to combine what we've learned so far in a single query.
 Using the surveys table write a query to display the three date
 fields, species ID, and weight in kilograms (rounded to two decimal places), for
-rodents captured in 1999, ordered alphabetically by the species ID.***
+rodents captured in 1999, ordered alphabetically by the species ID. Save it to a dataframe***
 
-
-
-**BREAK**
 
 Aggregation
 -----------
@@ -295,11 +302,11 @@ calculate combined values in groups (or for a table as a whole).
 Let’s go to the surveys table and find out how many individuals there are.
 Using the wildcard simply counts the number of records (rows)
 
-    SELECT COUNT(*) FROM surveys
+    dbGetQuery(con, "SELECT COUNT(*) FROM surveys;")
 
 We can also find out how much all of those individuals weigh.
 
-    SELECT COUNT(*), SUM(wgt) FROM surveys
+    dbGetQuery(con, "SELECT COUNT(*), SUM(wgt) FROM surveys;")
 
 ***Do you think you could output this value in kilograms, rounded to 3 decimal
    places?***
@@ -315,9 +322,9 @@ MAX, MIN, and AVG.
 Now, let's see how many individuals were counted in each species. We do this
 using a GROUP BY clause
 
-    SELECT species, COUNT(*)
-    FROM surveys
-    GROUP BY species
+    dbGetQuery(con, "SELECT species, COUNT(*)
+				     FROM surveys
+				     GROUP BY species;")
 
 GROUP BY tells SQL what field or fields we want to use to aggregate the data.
 If we want to group by multiple fields, we give GROUP BY a comma separated list.
@@ -326,6 +333,7 @@ If we want to group by multiple fields, we give GROUP BY a comma separated list.
 ***1. How many individuals were counted in each year***
 ***2. Average weight of each species in each year**
 
+<!---
 We can order the results of our aggregation by a specific column, including the
 aggregated column.  Let’s count the number of individuals of each species
 captured, ordered by the count
@@ -334,7 +342,7 @@ captured, ordered by the count
     FROM surveys
     GROUP BY species
     ORDER BY COUNT(species)
-
+-->
 
 Joins
 -----
@@ -346,9 +354,9 @@ We also need to tell the computer which columns provide the link between the two
 tables using the word ON.  We want to join data with the same
 species codes.
 
-    SELECT *
-    FROM surveys
-    JOIN species ON surveys.species = species.species_id
+    dbGetQuery(con, "SELECT *
+                     FROM surveys
+                     JOIN species ON surveys.species = species.species_id;")
 
 ON is like WHERE, it filters things out according to a test condition.  We use
 the table.colname format to tell the manager what column in which table we are
@@ -360,7 +368,7 @@ have used a field name in a non-join query, we can use *table.colname*
 For example, what if we wanted information on when individuals of each
 species were captured, but instead of their species ID we wanted their
 actual species names.
-Z
+
     SELECT surveys.year, surveys.month, surveys.day, species.genus, species.species
     FROM surveys
     JOIN species ON surveys.species = species.species_id
@@ -376,15 +384,19 @@ wanted average mass of the individuals on each type of plot, we could use
     JOIN plots
     ON surveys.plot = plots.plot_id
     GROUP BY plots.plot_type
+	
+Use ```dbDisconnect()``` to close the connection between R and SQL. Only a limited number can be open at a given time..	
+	
 
-
+<!--- Applies in Firefox SQLite
 Adding data to existing tables
 ------------------------------
 
 * Browse & Search -> Add
 * Enter data into a csv file and append
+-->
 
-
+<!---
 Other database management systems
 ---------------------------------
 
@@ -395,7 +407,7 @@ Other database management systems
 * MySQL/PostgreSQL
     * Multiple simultaneous users
 	* More difficult to setup and maintain
-
+-->
 
 Q & A on Database Design (review if time)
 -----------------------------------------
@@ -408,9 +420,15 @@ Q & A on Database Design (review if time)
      * Split into separate tables with one table per class of information
 	 * Needs an identifier in common between tables – shared column - to
        reconnect (foreign key).
-
-
-1. Ordered list item
-2. Ordered list item
-
-    /* This is a code block */
+	   
+Additional Resources and Information
+------------------------------------
+* A few types of queries in SQL, in addition to SELECT, will cover most of what you might want to do.
+  UPDATE change column values; CREATE generates  a new, blank table; DELETE removes rows from a table. 	   
+  All of these can employ the concepts of calculation, filtering, aggregation, and joining in their execution.
+ 
+* Database design tips: https://www.periscope.io/blog/better-sql-schema.html
+ 
+	   
+Adapted by Mary Shelley for SESYNC CSI 2015 from Data Carpentry SQL lesson, authored by Ethan White
+https://github.com/datacarpentry/archive-datacarpentry/blob/master/lessons/sql/sql.md

@@ -1,24 +1,49 @@
 # CSI 2015 Tip Sheet
 
+### SESYNC resources
 
-### ```rstudio.sesync.org```
+**```rstudio.sesync.org```** starts in your in home directory ```~```
 
-In RStudio, change directories by clicking the ellipsis [...] in the Files tab of the lower right hand window.
+**```files.sesync.org```** same place as ```/nfs/yourGroupNam-data```
 
-Home directory: ```~```
+**```gitlab.sesync.org```**
 
-Group data directory: ```/nfs/yourGroupName-data```
+### R basics
 
-This is the same directory you can access via ```files.sesync.org```
+### SQL
+#### Basics
+* ```SELECT * FROM x``` - all the rows and columns from table _x_
 
-### ```gitlab.sesync.org```
+* ```SELECT DISTINCT...``` -- one row per unique combination of requested variables
 
-* git clone
-* git status
-* git add
-* git commit
-* git push
-* git pull
+* Use ```LIMIT 10``` at the very end of a query to show the first 10 records
+
+* ```SELECT a*10 FROM  x``` -- value of column _a_ multiplied by 10 for all the rows
+
+* ```SELECT a FROM x WHERE y=1``` -- column a from table x for rows where _y_=1
+
+* ```SELECT ... FROM ... WHERE ... ORDER BY ```
+
+#### Aggregating
+* ```SELECT COUNT(*) FROM x``` - an integer indicating the total number of rows
+
+* ```SELECT a, COUNT(*) FROM x GROUP BY a``` - one row per distinct value of _a_
+
+### Joining
+* ```SELECT * FROM t1 JOIN t2 on t1.x = t2.y``` - all columns from t1 and t2 for where x in t1 matches y in t2
+
+### git
+* We start with ```fork``` so everyone has their own copy of the repository. Once in RStudio, the following occurs:
+
+* We ```clone``` the repository  from the *remote* location on the gitlab server to the *local* project in your home directory.
+
+* Once we are ready to checkpoint the files, we ```add``` them to the ```commit``` which creates a _local_ checkpoint in your home directory.
+
+* Once files are ready to be shared with others, i.e., uploaded back to the _remote_ gitlab server, we ```push``` the commit.
+
+* When we want to check for updates on the _remote_ server and copy them to our _local_ project, we ```pull```.
+
+### tidyr and dplyr
 
 
 ### Finding resources in R
