@@ -1,9 +1,9 @@
 Data manipulation with tidyr and dplyr
 ======================================
 
-In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we"ll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
+In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we will explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
 
-To get the most out of packages like dplyr and ggplot2 (which we"ll discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for "cleaning" data sets.
+To get the most out of packages like dplyr and ggplot2 (which we will discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for "cleaning" data sets.
 
 Tidy data concept
 -----------------
@@ -14,7 +14,7 @@ R developer Hadley Wickham (author of the tidyr, dplyr and ggplot packages, amon
 -   each observation forms a row; and
 -   each type of observational unit forms a table. ([ref](http://www.jstatsoft.org/v59/i10/paper))
 
-These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let"s consider a different examples where the counts of three species are recorded for each day in a week:
+These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let's consider a different examples where the counts of three species are recorded for each day in a week:
 
 ``` r
 counts_df <- data.frame(
@@ -40,7 +40,7 @@ To put it another way, if you can consider the grouping of observations based on
 Reshaping multiple columns into category/value pairs
 ----------------------------------------------------
 
-Let"s load the **tidyr** package and use its `gather` function to reshape *counts\_df* into a tidy format:
+Let's load the **tidyr** package and use its `gather` function to reshape *counts\_df* into a tidy format:
 
 ``` r
 library(tidyr)
@@ -100,7 +100,7 @@ head(species)
     ## 5         CB Campylorhynchus brunneicapillus                Bird
     ## 6         CM         Calamospiza melanocorys                Bird
 
-Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let"s use `separate` to reverse our previous operation:
+Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let's use `separate` to reverse our previous operation:
 
 ``` r
 species <- separate(species, name, c("genus", "species"), sep=" ", convert = TRUE)
@@ -134,13 +134,13 @@ surveys_pick100 <- sample_n(surveys, 100)
 head(surveys_pick100)
 ```
 
-    ##       record_id month day year plot species  sex wgt
-    ## 33199     33199    11  18 2001   13      PB    M  50
-    ## 21902     21902    11   1 1994    1      PF    F   7
-    ## 25631     25631     4  13 1997   15      OT    F  26
-    ## 29686     29686     5  16 1999   15      PP    M  17
-    ## 16652     16652    11   4 1989    7      RF    F  15
-    ## 2073       2073     9  23 1979   16    <NA> <NA>  NA
+    ##       record_id month day year plot species sex wgt
+    ## 5854       5854     5  21 1982   22      DS   M 128
+    ## 3096       3096     6  23 1980    4      DS   M 124
+    ## 23051     23051    12   3 1995    3      DO   M  55
+    ## 34794     34794    10   5 2002   17      PP   M  16
+    ## 10082     10082     3  16 1985    6      PE   M  15
+    ## 35304     35304    12   8 2002    4      DO   F  52
 
 `arrange` sorts rows over one or multiple columns. As a comparison, I added the base R code doing the same operation.
 
@@ -151,12 +151,12 @@ head(sorted1)
 ```
 
     ##   record_id month day year plot species  sex wgt
-    ## 1      3586    12  15 1980   16      AB <NA>  NA
-    ## 2     21160    10  15 1993    2      AB <NA>  NA
-    ## 3     13775    11  22 1987    7      AB <NA>  NA
-    ## 4     23854     4  15 1996   15      AH <NA>  NA
-    ## 5     22063     2   4 1995    1      DM    F  53
-    ## 6       593     2  18 1978    2      DM    M  52
+    ## 1     29883    10   9 1999   17      AH <NA>  NA
+    ## 2     19055     9  10 1991   24      AH <NA>  NA
+    ## 3     14458     5  14 1988   18      AH <NA>  NA
+    ## 4     35165    11  10 2002   14      DM    M  53
+    ## 5     25116     2   9 1997   16      DM    M  51
+    ## 6     19259    11  14 1991   17      DM    M  51
 
 To select rows based on certain conditions (like WHERE in SQL), use `filter`. Note that a logical "and" is implied when conditions are separated by commas.
 
@@ -179,7 +179,7 @@ head(surveys1990_winter)
     ## 5     16883     1   6   12      RM   M  10
     ## 6     16884     1   6   24      RM   M   9
 
-Let"s say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
+Let's say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
 
 ``` r
 surveys1990_winter <- group_by(surveys1990_winter, species)
