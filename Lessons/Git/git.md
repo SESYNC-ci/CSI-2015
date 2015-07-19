@@ -45,9 +45,37 @@
 
 ## Commit your changes
 
+   The process of commiting tells git that you've reached a point in your code that you want to remember. Commits should be small discrete changes. For example, while editing this, I commited this file between sections. For code, you may want to commit each time you have it in a working state. 
+
+1. Tools -> Version Control -> Commit
+2. Select the files you would like to commit. 
+** Committing is a two step process, first is selecting the files you want to stage for committing, second is preforming the actual commit.
+** Select the readme file, add a commit, click commit
+3. View your changes
+** Tools -> Version Control -> History
+
 ## Push your Changes
 
-## Pull changes
+   The next step is to push our code to a public/shared space. This is usually done when its time to share, or you've completed a feature.
+
+1. Go back to gitlab, click on Commits and notice that your don't see your recent changes.
+2. Go back into rstudio.
+** Tools -> version control -> push
+** You'll be prompted for your sesync name and password
+3. Go back into gitlab.
+** reload the page and notice you not see your commit.
+
+Now for the next step we're going to pretend someone else modified your code and you would like to see the changes. 
+
+1. In gitlab, click files -> readme, then click edit.
+2. Add a line, add a commit message and click 'commit changes'.
+
+## Pull Changes
+
+Pulling is the opposite of pushing changes. When you pull, you are syncing your local copy with what has been pushed to the server. You may also be forced to pull in certain circumstances (the remote has changes you don't, etc). When you pull, you may encounter merging issues if both your local  reposotory and the remote one contain changes to the same file. Is is up to you to resolve these changes, tell git you resolved them, then push up a good copy.
+
+1. Tools -> version -> pull
+2. Tools -> version -> history
 
 # Resources
 
