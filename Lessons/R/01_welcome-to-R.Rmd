@@ -1,0 +1,182 @@
+---
+title: "Welcome to R"
+output: html_document
+---
+
+R is a programming language that we will interact with through RStudio. We are using RStudio server in a browser window in order to connect with other services at SESYNC, but most of what we will cover also applies to the RStudio program that runs as a standalone program on your computer. 
+
+Anatomy of RStudio
+
+* Console
+* Environment
+* Open a new file (R script) in the top left panel
+* Files/plots/help tabs in lower right
+
+Type into the console at the `>` prompt to get a response like a calculator
+
+```{r}
+1+2
+```
+
+Using a programming language like R, you can record the steps of your analysis by saving them in a file. Run sections of code from the script panel by:
+
+* highlighting that section of code and clicking "Run"
+* Using cmd/ctrl (mac/pc) and Enter, which will run the line of code where your cursor is
+
+### Comments
+
+Any line that starts with a `#` is not run by the computer, but is a great way to explain the steps of the analsysis you are doing
+
+```{r}
+# this is the beginning of my analysis
+1 + 2
+```
+
+We can create a list of numbers, called a **vector**, by combining them together using `c()`. If the numbers are all in order, the `:` is a short-cut to not need to type them all out. 
+
+```{r}
+c(3,4,5,6,7)
+c(3:7)
+```
+
+Store your vector by giving it a name and using the **assignment operator** `<-`. Then you can refer to the items in that list by using its name. Use bracket notation to refer to a selected item or selection of items in that list. 
+
+```{r}
+mynumbers <- c(1:10) # store vector with assignment operator
+mynumbers
+mynumbers[3]
+```
+
+Q: Store the first and last numbers of your vector in a new object.
+
+__Review__
+
+| Symbol | Meaning |
+| -------|---------|
+| `?` | help |
+| `c()` | combine |
+| `#` | comment | 
+| `:` | sequence |
+| `<-` | assignment |
+| `[ ]` | selection |
+
+
+**Getting help**
+There are many ways to get help with R and RStudio, including functionality built into the program. Search using the help tab on the lower right, or use the question mark function:
+
+```{r}
+?mean
+```
+
+`mean` is an example of a function in R. The help documentation shows an example usage with the name of the function, an open parenthesis, x, and a close parenthesis. (Let's ignore the ellipsis for now.)
+
+
+Q: Use the function mean to get the average of this list of numbers: 387, 964, 14, -350
+
+```{r}
+x <- c(387,964,14,-350)
+mean(x)
+```
+
+### A simple data frame
+
+To store information alongside those values, we could combine `x` with a vector of names associated with each one of the values. Just as before, make a vector using `c()` but be sure to put each item in the list in quotes. This means it will be interpreted as a **string** or word, instead of a variable. 
+
+```{r}
+animals <- c("pig", "dog", "cat", "bunny") 
+```
+
+Combine `x` and `animals` into a **data frame** with the aptly named function `data.frame()`. Note the period between the words. Store your data frame as an object called `mydata`.
+
+
+```{r}
+mydata <- data.frame(animals, x)
+mydata
+```
+
+Q: How many rows and columns are in your data?
+
+Another helpful function to know about is `str()` for structure. Easily find out information about each of the objects in your environment with the `str` function. 
+
+
+```{r}
+str(mydata)
+```
+
+Q: Where else can you find this information easily?
+
+* In the Environment window
+* Opening up the objects in the viewer
+
+### Loading data into R
+
+Now let's ingest your data into R in a way that makes it easy to work with. Data could live on a disk, in a database, or on the web. Our focus right now is when data lives on a disk. We will move later into when data lives on a database or on the web.
+
+The data
+--------
+
+This is data on a small mammal community in southern Arizona over the last 35 years.  This is part of a larger project studying the effects of rodents and ants on the plant community.  The rodents are sampled on a series of 24 plots, with different experimental manipulations of which rodents are allowed to access the plots.
+
+This is a real dataset that has been used in over 100 publications.  It's been simplified just a little bit for the workshop, but you can download the [full dataset](http://esapubs.org/archive/ecol/E090/118/) and work with it using exactly the same tools we'll learn about today.
+
+## Read in your data
+
+_put path to data folder on etherpad_
+The data are on SESYNC servers in a '/nfs/public-data/CSI2015/'
+
+The data we are going to use is in a folder on the sesync storage space that you can access through RStudio. "public-data" is a folder just like many of you will have for your projects. 
+
+
+* use a function like read.csv() that reads in a file
+
+* use the function by passing it the appropriate arguments. there are necessary arguments, default arguments, and optional arguments for functions
+
+Now let's read in the file into a dataframe with the read.csv() function. The general syntax for the functions to read in data are to give the path to the file name, and then supply optinal additional arguments as necessary like specifying column types. If you don't specify what argument you are giving it, R will use the defaults. 
+
+
+``` r
+read.csv(file="/nfs/public-data/CSI2015/plots.csv")
+```
+
+Remember to use the assignment operator "<-" to store that data in memory and work with it
+
+``` r
+plots <- read.csv(file="/nfs/public-data/CSI2015/plots.csv")
+surveys <- read.csv(file="/nfs/public-data/CSI2015/surveys.csv")
+``` 
+
+
+## Viewing data frames
+
+There are several ways to look at the data
+* use head() to show the beginning rows of the data frame
+* navigate in Environment window
+* open csv by clicking on name in file browser (if in current working directory)
+
+``` r
+head(surveys)
+head(plots)
+``` 
+
+
+
+Additional Information
+--------------------------
+
+Some basic math functions in R
+
+```r
+*, +, -, /, ^, %%, %/%
+abs, sign
+acos, asin, atan, atan2
+sin, cos, tan
+ceiling, floor, round, trunc, signif
+exp, log, log10, log2, sqrt
+
+max, min, prod, sum
+cummax, cummin, cumprod, cumsum, diff
+pmax, pmin
+range
+mean, median, cor, sd, var
+rle
+```

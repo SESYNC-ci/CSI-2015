@@ -52,7 +52,6 @@ hist(log(surveys1996$wgt))
 
 ``` 
 
-?pch
 
 We know that the dates columns are exactly the same for the no_species dataframe and the weights dataframe, so we can just add the Totalwgt column to the species dataframe. If the dates were different we might do a join.
 
