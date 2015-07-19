@@ -5,7 +5,7 @@ After reading in the Surveys and Plots csv files, let's explore what types of da
 
 ### Get quick overview
 
-* summary(), dim(), names() and head() are others handy functions to get a quick idea of your data
+Some handy functions to get a quick idea of your data:
 
 
 | function | returns |
@@ -16,6 +16,7 @@ After reading in the Surveys and Plots csv files, let's explore what types of da
 | names | (column) names |
 | str | structure |
 | summary | summary info |
+| head | shows beginning rows |
 
 ``` r
 str(plots)
@@ -25,11 +26,11 @@ str(surveys)
 summary(surveys)
 ``` 
 
-The data we read in are stored in a __data frame__. Data frames have the same type of data in each column. A specific column in a data frame can be accessed using the $ notation with the column name.
-
-A data frame is the most common way of storing data in R, and if used systematically makes data analysis easier. Under the hood, a data frame is a list of equal-length vectors. This makes it a 2-dimensional structure, so it shares properties of both the matrix and the list. This means that a data frame has names(), colnames(), and rownames(), although names() and colnames() are the same thing. The length() of a data frame is the length of the underlying list and so is the same as ncol(); nrow() gives the number of rows. 
+The data we read in are stored in a __data frame__. A data frame is the most common way of storing data in R, and if used systematically makes data analysis easier. Under the hood, a data frame is a list of equal-length vectors. This makes it a 2-dimensional structure, much like an Excel spreadsheet. This means that a data frame has names(), colnames(), and rownames(), although names() and colnames() are the same thing. The length() of a data frame is the length of the underlying list and so is the same as ncol(); nrow() gives the number of rows. 
 
 A data.frame is one of the most commonly used objects in R. Just think of a data.frame like a table, or a spreadsheet, with rows and columns and numbers, text, etc. in the cells. A very special thing about the data.frame in R is that it can handle multiple types of data - that is, each column can have a different type. 
+
+Each column in a data frame can be referred to using the `$` operator and the data frame name and the column name. `surveys$record_id` refers to the record_id column in the surveys data frame.
 
 
 ## Types of Vectors
@@ -50,27 +51,37 @@ You can specify what indicates missing data in the read.csv or read_csv function
 
 **Numbers and integers**
 
+Most of the rows in the surveys data frame are numbers and integers. Data that are strictly positive whole numbers are stored as integers. 
 
 **Factors**
 
 A factor is a vector that can contain only predefined values, and is used to store categorical data. Factors are built on top of integer vectors using two attributes: the class(), “factor”, which makes them behave differently from regular integer vectors, and the levels(), which defines the set of allowed values. 
 
 
-We can make the plots$plot_type column a factor with the as.factor() function
+We can make a column a factor with the as.factor() function. Use `as.factor()` to change the month column to a factor and see how the result of the summary function changes
 
 ```r
-plots$plot_type <- as.factor(plots$plot_type)
-``` 
-
-How many plots of each type? With factor data type, now the summary gives that info
-
-``` r
-summary(plots)
-``` 
+surveys$month <- as.factor(surveys$month)
+summary(surveys)
+```
 
 **Logical data** (True or False)
 
-Logical data is stored as either a 1 or 0, True or False. Make a new column with a logical data type based on some condition (e.g. whether the taxa was censused). Verify that is is logical (what are several ways to do this?)
+Logical data is stored as either a 1 or 0, True or False. Logical vectors can be created using **logical operators**
+
+| symbol | meaning |
+|--------|---------|
+| < |  less than |
+| <= |	less than or equal to |
+| > |	greater than |
+| >= 	| greater than or equal to |
+| == 	| exactly equal to |
+| != 	| not equal to |
+| !x |	Not x |
+| x | y |	x OR y |
+| x & y |	x AND y  |
+
+Make a new column with a logical data type based on some condition (e.g. whether the taxa was censused). Verify that is is logical (what are several ways to do this?)
 
 ``` r
 plots$control <- plots$plot_type=="Control"
@@ -176,7 +187,6 @@ http://adv-r.had.co.nz/Subsetting.html#simplify-preserve
 http://adv-r.had.co.nz/Vocabulary.html
 http://rforcats.net/
 
-## Other Data structures
 
 Data frames are 2-dimensional and can contain heterogenous data like numbers in one column and categories in another. Other types of data in R can be described according to these categories
 

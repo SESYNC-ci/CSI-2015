@@ -62,7 +62,9 @@ __Review__
 
 
 **Getting help**
-There are many ways to get help with R and RStudio, including functionality built into the program. Search using the help tab on the lower right, or use the question mark function:
+
+There are many ways to get help with R and RStudio, including functionality built into the program. Search using the help tab on the lower right, or use the question mark function. Let's see if there is an easy way to find the mean of a sequence of numbers
+
 
 ```{r}
 ?mean
@@ -72,11 +74,14 @@ There are many ways to get help with R and RStudio, including functionality buil
 
 
 Q: Use the function mean to get the average of this list of numbers: 387, 964, 14, -350
+(put numbers on etherpad)
 
 ```{r}
 x <- c(387,964,14,-350)
 mean(x)
 ```
+
+    # [1] 253.75
 
 ### A simple data frame
 
@@ -93,6 +98,13 @@ Combine `x` and `animals` into a **data frame** with the aptly named function `d
 mydata <- data.frame(animals, x)
 mydata
 ```
+
+| animals | x |
+|---------|----|
+| pig | 387 |
+| dog | 964 |
+| cat | 14 |
+| bunny | -350 |
 
 Q: How many rows and columns are in your data?
 
@@ -127,11 +139,7 @@ The data are on SESYNC servers in a '/nfs/public-data/CSI2015/'
 The data we are going to use is in a folder on the sesync storage space that you can access through RStudio. "public-data" is a folder just like many of you will have for your projects. 
 
 
-* use a function like read.csv() that reads in a file
-
-* use the function by passing it the appropriate arguments. there are necessary arguments, default arguments, and optional arguments for functions
-
-Now let's read in the file into a dataframe with the read.csv() function. The general syntax for the functions to read in data are to give the path to the file name, and then supply optinal additional arguments as necessary like specifying column types. If you don't specify what argument you are giving it, R will use the defaults. 
+We will use the function `read.csv()` that reads in a file by passing it the location of the file. The general syntax for the functions to read in data are to give the path to the file name, and then supply optinal additional arguments as necessary like specifying column types. If you don't specify what argument you are giving it, R will use the defaults, which we will do for now. 
 
 
 ``` r
