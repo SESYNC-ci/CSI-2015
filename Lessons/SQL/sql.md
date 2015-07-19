@@ -24,7 +24,7 @@ data. We're going to use SQLite, but most everything
 will apply to the other database systems as well (e.g., MySQL, PostgreSQL, MS
 Access, Filemaker Pro). The main differences are in the details of how to import and export data.
 
-<!---
+<!--- Kelly covering this in R intro
 The data
 --------
 This is data on a small mammal community in southern Arizona over the last 35
@@ -70,7 +70,8 @@ RSQLite is a package that allows us to interact with a SQLite database in R.
 	library(RSQLite)
 
 Need to "open a connection" to the database so that R can communicate with it.
-SQLite requires a "driver" and "dbname" 
+SQLite requires a "driver" and "dbname." The same dataset Kelly showed you, has been imported into a SQLite database.
+This database contains three tables: surveys, species and plots
 
 	drv <- dbDriver("SQLite")
 	db <- "/nfs/public-data/CSI2015/portal_mammals.sqlite"
@@ -81,6 +82,7 @@ Other types of relational databases may have other arguments like user and pwd.
 
 Basic queries
 -------------
+
 Let's start by using the **surveys** table.
 Here we have data on every individual that was captured at the site,
 including when they were captured, what plot they were captured on,
@@ -135,6 +137,13 @@ Or we can select all of the columns in a table using the wildcard *
     
 	head(dbGetQuery(con, "SELECT * FROM surveys;"))
 
+### Limit
+
+We've been using head() from R to just look at the first few rows, but
+SQL also has a function that will do this, called Limit
+
+	dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys LIMIT 10";)
+		
 ### Unique values
 
 If we want only the unique values so that we can quickly see what species have
@@ -146,13 +155,6 @@ If we select more than one column, then the distinct pairs of values are
 returned
 
     dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys";)
-
-## Limit
-
-We've been using head() from R to just look at the first few rows, but
-SQL also has a function that will do this, called Limit
-
-	dbGetQuery(con, "SELECT DISTINCT year, species FROM surveys LIMIT 10";)
 	
 	
 ### Calculated values
