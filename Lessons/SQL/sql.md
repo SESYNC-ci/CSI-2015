@@ -1,15 +1,15 @@
-Databases using SQL and R
+Databases using SQL in R
 ==========================
 
 Relational databases
 --------------------
 * Relational databases store data in tables with fields (columns) and records
   (rows)
-* Data in tables has types, just like in Python, and all values in a field have
+* Data in tables has types, just like in R, and all values in a field have
   the same type
+* The data are distinct from the  questions we ask of them. We interact with the data through queries,
+   so if we change the data we can just rerun the query. This also prevents us from accidentally changing the data.
 * Queries let us look up data or make calculations based on columns
-* The queries are distinct from the data, so if we change the data we can just
-  rerun the query
  	   
 When to consider a relational design
 -------------------------------------
@@ -24,6 +24,7 @@ data. We're going to use SQLite, but most everything
 will apply to the other database systems as well (e.g., MySQL, PostgreSQL, MS
 Access, Filemaker Pro). The main differences are in the details of how to import and export data.
 
+<!---
 The data
 --------
 This is data on a small mammal community in southern Arizona over the last 35
@@ -36,6 +37,7 @@ This is a real dataset that has been used in over 100 publications.  It's been
 simplified just a little bit for the workshop, but you can download the
 [full dataset](http://esapubs.org/archive/ecol/E090/118/) and work with it using
 exactly the same tools here.
+-->
 
 Database Design
 ---------------
@@ -43,7 +45,6 @@ Database Design
 2. Every row-column combination contains a single *atomic* value, i.e., not
    containing parts we might want to work with separately.
 3. One field per type of information	
-	![](example.png)
 4. No redundant information
      * Split into separate tables with one table per class of information
 	 * Needs an identifier in common between tables – shared column - to
@@ -60,7 +61,10 @@ Keep in mind that the SQL statements themselves could be used as-is from other "
 
 Connecting R to SQLite
 ----------------------
-RSQLite is a package that allows us to do that.
+One of the things that makes R powerful is that it's open source, so people can contribute new functions in the form of packages.
+Packages are collections of functions and related documentation (and sometimes data) that can be installed and loaded.
+
+RSQLite is a package that allows us to interact with a SQLite database in R.
 
 	install.packages("RSQLite")
 	library(RSQLite)
@@ -100,7 +104,7 @@ Now, call dbGetQuery.
 
 The results are returned to the window, but we can easily assign them to a dataframe
 
-	surv_yr = dbGetQuery(con, q1)
+	surv_yr <- dbGetQuery(con, q1)
 	
 Check what's in surv_yr with the head() function
 
@@ -110,7 +114,7 @@ You don't have to assign the SQL statement to a variable. You can call it direct
 things in R, there's more than one way right way, and the most convenient way will depend on
 what you're doing.
 
-	surv_yr = dbGetQuery(con, "SELECT year FROM surveys;")	
+	surv_yr <- dbGetQuery(con, "SELECT year FROM surveys;")	
 	
 A note on style: we have capitalized the words SELECT and FROM because they are SQL keywords.
 Unlike R, SQL is case insensitive, but it helps for readability – good style. Because the
@@ -136,7 +140,7 @@ Or we can select all of the columns in a table using the wildcard *
 If we want only the unique values so that we can quickly see what species have
 been sampled we use ``DISTINCT``
 
-    head(dbGetQuery(con, "SELECT DISTINCT species FROM surveys;"))
+    dbGetQuery(con, "SELECT DISTINCT species FROM surveys;"))
 
 If we select more than one column, then the distinct pairs of values are
 returned
@@ -157,7 +161,7 @@ We can also do calculations with the values in a query.
 For example, if we wanted to look at the mass of each individual
 on different dates, but we needed it in kg instead of g we would use
 
-    dbGetQuery(con, "SELECT year, month, day, wgt/1000.0 FROM surveys LIMIT 10;")
+    dbGetQuery(con, "SELECT year, month, day, wgt/1000.0 FROM surveys;")
 
 When we run the query, the expression ``wgt / 1000.0`` is evaluated for each row
 and appended to that row, in a new column.  Expressions can use any fields, any
