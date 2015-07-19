@@ -9,9 +9,9 @@ output:
 
 # Data manipulation with tidyr and dplyr
 
-In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we"ll explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
+In the previous lessons, we loaded and processed the same dataset in two different formats: R data frames and SQL tables. In this session, we will explore this data again with the **dplyr** R package. This package provides new functions for commonly-used operations on data frames, which are more user-friendly and often more computer efficient than base R. Their format is also very similar to SQL commands, facilitating the translation between the two languages.
 
-To get the most out of packages like dplyr and ggplot2 (which we"ll discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for "cleaning" data sets.
+To get the most out of packages like dplyr and ggplot2 (which we will discuss later), it is often necessary to reshape data frames in a certain standard format. Therefore, we will first look at the **tidyr** package and its utility functions for "cleaning" data sets.
 
 ## Tidy data concept
 
@@ -21,7 +21,7 @@ R developer Hadley Wickham (author of the tidyr, dplyr and ggplot packages, amon
 * each observation forms a row; and
 * each type of observational unit forms a table. ([ref](http://www.jstatsoft.org/v59/i10/paper))
 
-These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let"s consider a different examples where the counts of three species are recorded for each day in a week:
+These guidelines may look familiar now, as similar ideas form the basis of good database design. The tables in our sample dataset (*surveys*, *species* and *plots*) are already in a tidy format. Let's consider a different examples where the counts of three species are recorded for each day in a week:
 ```{r}
 counts_df <- data.frame(
   day = c("Monday", "Tuesday", "Wednesday"),
@@ -40,7 +40,7 @@ To put it another way, if you can consider the grouping of observations based on
 
 ## Reshaping multiple columns into category/value pairs
 
-Let"s load the **tidyr** package and use its `gather` function to reshape *counts_df* into a tidy format:
+Let's load the **tidyr** package and use its `gather` function to reshape *counts_df* into a tidy format:
 ```{r}
 library(tidyr)
 counts_df <- gather(counts_df, key = "species", value = "count", 
@@ -69,7 +69,7 @@ species <- unite(species, name, c(genus, species), sep=" ")
 head(species)
 ```
 
-Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let"s use `separate` to reverse our previous operation:
+Note that `unite` removes the original columns by default, but this be changed with the argument `remove = FALSE`. Now let's use `separate` to reverse our previous operation:
 ```{r}
 species <- separate(species, name, c("genus", "species"), sep=" ", convert = TRUE)
 head(species)
@@ -111,7 +111,7 @@ surveys1990_winter <- select(surveys1990_winter, -year)
 head(surveys1990_winter)
 ```
 
-Let"s say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
+Let's say we want to count the number of individuals observed by species for that season. To do that, we will first define a grouping with `group_by`, then use `summarise` to aggregate values in each group according to some function (here, the built-in function `n()` to count the rows).
 ```{r}
 surveys1990_winter <- group_by(surveys1990_winter, species)
 counts_1990w <- summarise(surveys1990_winter, count = n())

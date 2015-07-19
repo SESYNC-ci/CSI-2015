@@ -98,7 +98,7 @@ year_wgt
 
 ![](ggplot2_files/figure-markdown_github/plot_lm_scales-1.png)
 
-The `labels` parameter affects the names displayed in the legend. What happens if the labels provided to the shape and color scales don"t match? (Try it.) You can also change the order of legend labels with the `breaks` parameter of the `scale` function.
+The `labels` parameter affects the names displayed in the legend. What happens if the labels provided to the shape and color scales don't match? (Try it.) You can also change the order of legend labels with the `breaks` parameter of the `scale` function.
 
 ### Exercise
 
@@ -107,7 +107,7 @@ Create an histogram of the weights of individuals of species *DM* and divide the
 Axes, labels and themes
 -----------------------
 
-Let"s start from the histogram produced for the exercise above.
+Let's start from the histogram produced for the exercise above.
 
 ``` r
 histo <- ggplot(data = surveys_dm, aes(x = wgt, fill = sex)) +
