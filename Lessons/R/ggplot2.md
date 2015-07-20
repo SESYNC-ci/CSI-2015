@@ -162,19 +162,6 @@ ggplot(data = surveys_dm, aes(x = wgt)) +
   labs(title = "DM weight distribution by month", x = "Count", y = "Weight (g)")
 ```
 
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-    ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
-
 ![](ggplot2_files/figure-markdown_github/plot_facets-1.png)
 
 Additional information
