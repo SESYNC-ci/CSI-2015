@@ -56,6 +56,8 @@
 * ```select``` return selected columns
 * ```group_by``` group data into rows with the same value of a col
 * ```summarise``` data into a single row of values
+* ```join``` combines data from two data frames based on common variable
+* ```mutate``` add new variables to a data frame
 * ```x %>% y``` pass x to y, can be chained
 
 ### ggplot components
